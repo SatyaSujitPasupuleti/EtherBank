@@ -13,7 +13,7 @@ contract EtherBank{
 
 
     }
-    function store(uint _amount) public{
+    function store(uint _amount) public payable {
         require(_amount > 0); //prevents people from creating accounts of 0
         //if they have no account
         if(statusOfCustomers[msg.sender] == 0){
@@ -30,13 +30,13 @@ contract EtherBank{
 
         }
     }
-    function withdraw(uint _amount) public{
+    function withdraw(uint _amount) public payable{
         require(balances[msg.sender] != 0); //make sure they have and account and that account has balance
         require(_amount > 0);
         balances[msg.sender] = balances[msg.sender] - _amount;
         totalBalances = totalBalances - _amount;
     }
-    function loan(uint _amount) public{ //some logic needs to be fixed here
+    function loan(uint _amount) public payable { //some logic needs to be fixed here
         if(statusOfCustomers[msg.sender] == 0){
             loans[msg.sender] = _amount;
             totalLoans = totalLoans + _amount;
@@ -53,16 +53,25 @@ contract EtherBank{
         }
 
     }
-    function returnLoan(uint _amount) public{
+    function returnLoan(uint _amount) public payable{
         require(loans[msg.sender] != 0); //making sure they have a loan
         loans[msg.sender] = loans[msg.sender] - _amount;
         totalLoans = totalLoans - _amount;
     }
     function getInterest() public{ //call this function once every month to calculate interest
         require(msg.sender == owner);
+        //15% monthly interest on each loan
         //calculate interest given total loans and all the people who stored money;
         //50% of interest goes to people who stored their money
     }
+    function() external payable { 
+        require(msg.value > 0);
+        //anonymous function to allow for ether payment
+        
+
+    }
+
+
 
 
 
