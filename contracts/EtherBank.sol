@@ -18,7 +18,8 @@ contract EtherBank{
       //  require(_amount > 0); //prevents people from creating accounts of 0
         //if they have no account
         //implicitly stores ether into contract
-     //   require(msg.value == _amount);
+        
+      //  require(msg.value == _amount); 
         if(statusOfCustomers[msg.sender] == 0){
             balances[msg.sender] = _amount;
             totalBalances = totalBalances + _amount;
@@ -34,9 +35,9 @@ contract EtherBank{
         }
     }
     function withdraw(uint _amount) public payable{
-      //  require(balances[msg.sender] != 0); //make sure they have and account and that account has balance
-      //  require(_amount > 0);
-      //  require(_amount <= balances[msg.sender]);
+     //   require(balances[msg.sender] != 0); //make sure they have and account and that account has balance
+     //   require(_amount > 0);
+     //   require(_amount <= balances[msg.sender]);
         balances[msg.sender] = balances[msg.sender] - _amount;
         totalBalances = totalBalances - _amount;
         msg.sender.transfer(address(this).balance);
@@ -44,7 +45,7 @@ contract EtherBank{
     
     function loan(uint _amount) public payable { //some logic needs to be fixed here
        // require(totalBalances > 0);
-      //  require(msg.value == _amount);
+     //   require(msg.value == _amount);
         if(statusOfCustomers[msg.sender] == 0){
             loans[msg.sender] = _amount;
             totalLoans = totalLoans + _amount;
@@ -77,6 +78,11 @@ contract EtherBank{
         return balances[_holder];
 
     }
+    function contractBalance() public view returns(uint){
+        address(this).balance;
+    }
+    function() external payable { }
+    
 
    
 
