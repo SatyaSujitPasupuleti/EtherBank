@@ -2,7 +2,6 @@ var EtherBank = artifacts.require("./EtherBank");
 contract("Etherbank", async(accounts)=>{
     it("should store 10 Ether from Ganache into account" , async() =>{
         let instance = await EtherBank.deployed();
-        //how 
         var accountx = await web3.eth.accounts;
         
         await console.log(web3.fromWei(web3.eth.getBalance(web3.eth.accounts[0]).toNumber()));
